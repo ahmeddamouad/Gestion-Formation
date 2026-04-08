@@ -1,7 +1,6 @@
 "use client";
 
 import { Formation } from "@/types";
-import Button from "@/components/ui/Button";
 
 interface PackSelectionBarProps {
   selectedFormations: Formation[];
@@ -90,16 +89,15 @@ export default function PackSelectionBar({
               >
                 Annuler
               </button>
-              <Button
+              <button
                 onClick={onViewPack}
-                variant="secondary"
-                className="bg-white text-teal-600 hover:bg-teal-50 border-0"
+                className="flex items-center px-5 py-2.5 bg-white text-teal-600 font-semibold rounded-xl hover:bg-teal-50 transition-colors shadow-lg"
               >
                 <svg className="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                 </svg>
                 Voir le pack
-              </Button>
+              </button>
             </div>
           </div>
 

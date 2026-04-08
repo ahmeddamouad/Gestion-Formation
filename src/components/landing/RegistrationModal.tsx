@@ -14,6 +14,8 @@ interface RegistrationModalProps {
   onClose: () => void;
   formation: Formation | null;
   initialMode: "presentiel" | "visio";
+  onAddToPack?: (formation: Formation) => void;
+  isInPack?: boolean;
 }
 
 export default function RegistrationModal({
@@ -21,6 +23,8 @@ export default function RegistrationModal({
   onClose,
   formation,
   initialMode,
+  onAddToPack,
+  isInPack = false,
 }: RegistrationModalProps) {
   const [formData, setFormData] = useState<Partial<RegistrationFormData>>({
     prenom: "",
@@ -159,6 +163,55 @@ export default function RegistrationModal({
             <p className="text-sm text-text-muted mb-1">Formation selectionnee</p>
             <p className="font-medium text-text-primary">{formation.titre}</p>
           </div>
+
+          {/* Add to pack option */}
+          {onAddToPack && (
+            <div className="mb-6 p-4 rounded-lg bg-teal-500/10 border border-teal-500/30">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="font-medium text-text-primary">
+                    {isInPack ? "Cette formation est dans votre pack" : "Ajouter au pack ?"}
+                  </p>
+                  <p className="text-sm text-text-muted mt-1">
+                    {isInPack
+                      ? "Vous beneficiez deja de la reduction pack"
+                      : "Selectionnez 2+ formations pour une reduction jusqu'a 20%"}
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (formation) {
+                      onAddToPack(formation);
+                      onClose();
+                    }
+                  }}
+                  disabled={isInPack}
+                  className={`px-4 py-2 rounded-lg font-medium transition-colors flex items-center gap-2 ${
+                    isInPack
+                      ? "bg-teal-500/20 text-teal-400 cursor-default"
+                      : "bg-teal-500 text-white hover:bg-teal-600"
+                  }`}
+                >
+                  {isInPack ? (
+                    <>
+                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                      Dans le pack
+                    </>
+                  ) : (
+                    <>
+                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                      </svg>
+                      Ajouter au pack
+                    </>
+                  )}
+                </button>
+              </div>
+            </div>
+          )}
 
           {/* Form fields */}
           <div className="space-y-4">

@@ -82,6 +82,17 @@ export default function LandingPage() {
     });
   }, []);
 
+  // Handle adding to pack from registration modal
+  const handleAddToPackFromModal = useCallback((formation: Formation) => {
+    setSelectedForPack((prev) => {
+      const next = new Set(prev);
+      next.add(formation.id);
+      return next;
+    });
+    setModalOpen(false);
+    setSelectedFormation(null);
+  }, []);
+
   const handleViewPack = useCallback(() => {
     setPackModalOpen(true);
   }, []);
@@ -124,6 +135,8 @@ export default function LandingPage() {
         onClose={handleCloseModal}
         formation={selectedFormation}
         initialMode={selectedMode}
+        onAddToPack={handleAddToPackFromModal}
+        isInPack={selectedFormation ? selectedForPack.has(selectedFormation.id) : false}
       />
 
       {/* Formation Detail Modal */}
