@@ -1,65 +1,153 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import { useState, useCallback } from "react";
+import { Formation } from "@/types";
+import { useFormations } from "@/hooks/useFormations";
+import {
+  Navbar,
+  Hero,
+  FormationsSection,
+  RegistrationModal,
+  StatsCounter,
+  WhyUsSection,
+  FAQSection,
+  Footer,
+} from "@/components/landing";
+import FormationDetailModal from "@/components/landing/FormationDetailModal";
+import PackSelectionBar from "@/components/landing/PackSelectionBar";
+import PackRegistrationModal from "@/components/landing/PackRegistrationModal";
+
+export default function LandingPage() {
+  const { formations, isLoading, error, refetch } = useFormations();
+
+  // Registration modal state
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedFormation, setSelectedFormation] = useState<Formation | null>(null);
+  const [selectedMode, setSelectedMode] = useState<"presentiel" | "visio">("presentiel");
+
+  // Detail modal state
+  const [detailModalOpen, setDetailModalOpen] = useState(false);
+  const [detailFormation, setDetailFormation] = useState<Formation | null>(null);
+
+  // Pack selection state
+  const [selectedForPack, setSelectedForPack] = useState<Set<string>>(new Set());
+  const [packModalOpen, setPackModalOpen] = useState(false);
+
+  // Get selected formations as array
+  const selectedFormations = formations.filter((f) => selectedForPack.has(f.id));
+
+  // Handle opening registration modal
+  const handleRegister = useCallback((formation: Formation, mode: "presentiel" | "visio") => {
+    setSelectedFormation(formation);
+    setSelectedMode(mode);
+    setModalOpen(true);
+  }, []);
+
+  const handleCloseModal = useCallback(() => {
+    setModalOpen(false);
+    setSelectedFormation(null);
+  }, []);
+
+  // Handle showing formation details
+  const handleShowDetails = useCallback((formation: Formation) => {
+    setDetailFormation(formation);
+    setDetailModalOpen(true);
+  }, []);
+
+  const handleCloseDetailModal = useCallback(() => {
+    setDetailModalOpen(false);
+    setDetailFormation(null);
+  }, []);
+
+  // Handle detail modal register (opens registration modal from detail modal)
+  const handleDetailRegister = useCallback((formation: Formation, mode: "presentiel" | "visio") => {
+    setDetailModalOpen(false);
+    setDetailFormation(null);
+    // Small delay to let detail modal close
+    setTimeout(() => {
+      handleRegister(formation, mode);
+    }, 100);
+  }, [handleRegister]);
+
+  // Handle pack selection
+  const handleSelectForPack = useCallback((formation: Formation, selected: boolean) => {
+    setSelectedForPack((prev) => {
+      const next = new Set(prev);
+      if (selected) {
+        next.add(formation.id);
+      } else {
+        next.delete(formation.id);
+      }
+      return next;
+    });
+  }, []);
+
+  const handleViewPack = useCallback(() => {
+    setPackModalOpen(true);
+  }, []);
+
+  const handleClearPack = useCallback(() => {
+    setSelectedForPack(new Set());
+  }, []);
+
+  const handleClosePackModal = useCallback(() => {
+    setPackModalOpen(false);
+  }, []);
+
+  const handlePackSuccess = useCallback(() => {
+    // Clear selection and refetch formations
+    setSelectedForPack(new Set());
+    refetch();
+  }, [refetch]);
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+    <main className="w-full min-h-screen bg-navy-900">
+      <Navbar />
+      <Hero />
+      <FormationsSection
+        formations={formations}
+        isLoading={isLoading}
+        error={error}
+        onRegister={handleRegister}
+        onShowDetails={handleShowDetails}
+        onSelectForPack={handleSelectForPack}
+        selectedFormationIds={selectedForPack}
+      />
+      <StatsCounter />
+      <WhyUsSection />
+      <FAQSection />
+      <Footer />
+
+      {/* Registration Modal (single formation) */}
+      <RegistrationModal
+        isOpen={modalOpen}
+        onClose={handleCloseModal}
+        formation={selectedFormation}
+        initialMode={selectedMode}
+      />
+
+      {/* Formation Detail Modal */}
+      <FormationDetailModal
+        isOpen={detailModalOpen}
+        onClose={handleCloseDetailModal}
+        formation={detailFormation}
+        onRegister={handleDetailRegister}
+      />
+
+      {/* Pack Selection Bar */}
+      <PackSelectionBar
+        selectedFormations={selectedFormations}
+        onViewPack={handleViewPack}
+        onClear={handleClearPack}
+      />
+
+      {/* Pack Registration Modal */}
+      <PackRegistrationModal
+        isOpen={packModalOpen}
+        onClose={handleClosePackModal}
+        selectedFormations={selectedFormations}
+        onSuccess={handlePackSuccess}
+      />
+    </main>
   );
 }
