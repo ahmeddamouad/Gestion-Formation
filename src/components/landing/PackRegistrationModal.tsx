@@ -234,7 +234,7 @@ export default function PackRegistrationModal({
                       <div className="flex-1">
                         <p className="font-medium text-text-primary">{formation.titre}</p>
                         <p className="text-xs text-text-muted mt-1">
-                          Semaine {formation.week_number}
+                          {formation.session_date}
                           {formation.prix && ` • ${formatPrice(formation.prix)}`}
                         </p>
                       </div>

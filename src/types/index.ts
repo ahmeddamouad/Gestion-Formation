@@ -10,7 +10,6 @@ export interface Formation {
   current_attendees: number;
   mode: "presentiel" | "visio" | "both";
   is_active: boolean;
-  week_number: number;
   created_at: string;
   updated_at: string;
   // Detail fields (for modal)
@@ -22,6 +21,12 @@ export interface Formation {
   // Structured duration fields
   nombre_jours?: number;
   heures_par_jour?: number;
+  // Location fields (for WhatsApp automation)
+  location?: string;
+  location_address?: string;
+  location_maps_url?: string;
+  visio_link?: string;
+  whatsapp_group_link?: string;
 }
 
 // Form data for creating/editing formations
@@ -38,6 +43,12 @@ export interface FormationFormData {
   programme?: string[];
   objectifs?: string[];
   prerequis?: string;
+  // Location fields
+  location?: string;
+  location_address?: string;
+  location_maps_url?: string;
+  visio_link?: string;
+  whatsapp_group_link?: string;
 }
 
 export interface Registration {
@@ -52,6 +63,10 @@ export interface Registration {
   is_preregistration: boolean;
   status: "confirmed" | "pending" | "cancelled";
   created_at: string;
+  // Payment tracking
+  payment_status: "pending" | "paid" | "refunded";
+  payment_date?: string;
+  payment_amount?: number;
   // Joined data
   formation?: Formation;
 }
@@ -107,6 +122,36 @@ export interface PackRegistrationFormData {
   telephone: string;
   entreprise?: string;
   modesChoisis: ("presentiel" | "visio")[];
+}
+
+// WhatsApp notification tracking
+export type NotificationType = "payment_confirmation" | "reminder_24h" | "manual";
+export type NotificationStatus = "pending" | "sent" | "delivered" | "read" | "failed" | "undelivered";
+
+export interface Notification {
+  id: string;
+  registration_id?: string;
+  formation_id?: string;
+  recipient_phone: string;
+  recipient_name?: string;
+  notification_type: NotificationType;
+  message_content: string;
+  twilio_message_sid?: string;
+  status: NotificationStatus;
+  error_message?: string;
+  sent_at?: string;
+  delivered_at?: string;
+  created_at: string;
+  // Joined data
+  registration?: Registration;
+  formation?: Formation;
+}
+
+// Payment update data
+export interface PaymentUpdateData {
+  payment_status: "pending" | "paid" | "refunded";
+  payment_amount?: number;
+  send_confirmation?: boolean;
 }
 
 export interface DashboardStats {
@@ -189,5 +234,6 @@ export interface RegistrationFilters {
   status?: "confirmed" | "pending" | "cancelled" | "all";
   mode?: "presentiel" | "visio" | "all";
   isPreregistration?: boolean | "all";
+  paymentStatus?: "pending" | "paid" | "refunded" | "all";
   searchQuery?: string;
 }

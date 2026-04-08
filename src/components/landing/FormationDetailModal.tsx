@@ -92,7 +92,6 @@ export default function FormationDetailModal({
                   {formation.duree}
                 </Badge>
               )}
-              <Badge variant="neutral">Semaine {formation.week_number}</Badge>
             </div>
             <p className="text-text-muted text-sm">{formation.description}</p>
           </div>

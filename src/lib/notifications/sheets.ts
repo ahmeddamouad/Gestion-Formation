@@ -50,7 +50,7 @@ export async function appendToGoogleSheet(
       registration.entreprise || "",
       modeLabel,
       preregistrationLabel,
-      `Semaine ${formation.week_number}`,
+      formation.session_date,
     ];
 
     // Append to sheet

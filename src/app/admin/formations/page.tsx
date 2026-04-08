@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { Formation, Registration, FormationFormData } from "@/types";
-import { FormationsTable, RegistrationsPanel, FormationModal } from "@/components/admin";
+import { FormationsTable, RegistrationsPanel, FormationModal, NotificationHistoryPanel } from "@/components/admin";
 import Button from "@/components/ui/Button";
 import Modal from "@/components/ui/Modal";
 
@@ -22,6 +22,9 @@ export default function FormationsPage() {
   const [deleteFormation, setDeleteFormation] = useState<Formation | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
   const [deleteError, setDeleteError] = useState<string | null>(null);
+
+  // Notification history
+  const [showNotifications, setShowNotifications] = useState(false);
 
   // Fetch formations
   const fetchFormations = useCallback(async () => {
@@ -190,6 +193,76 @@ export default function FormationsPage() {
     window.open(`/api/admin/export?formation_id=${selectedFormation.id}`, "_blank");
   };
 
+  // Update payment status
+  const handlePaymentUpdate = async (
+    registrationId: string,
+    status: "paid" | "pending",
+    sendConfirmation: boolean
+  ) => {
+    try {
+      const response = await fetch(`/api/admin/registrations/${registrationId}/payment`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          payment_status: status,
+          send_confirmation: sendConfirmation,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        // Update local state
+        setRegistrations((prev) =>
+          prev.map((r) =>
+            r.id === registrationId
+              ? {
+                  ...r,
+                  payment_status: status,
+                  payment_date: status === "paid" ? new Date().toISOString() : undefined,
+                }
+              : r
+          )
+        );
+
+        if (data.whatsapp_sent) {
+          // Could show a success toast here
+          console.log("WhatsApp confirmation sent");
+        }
+      } else {
+        alert(data.message || "Erreur lors de la mise a jour");
+      }
+    } catch (error) {
+      console.error("Error updating payment:", error);
+      alert("Erreur lors de la mise a jour du paiement");
+    }
+  };
+
+  // Send reminder
+  const handleSendReminder = async (registrationId: string) => {
+    try {
+      const response = await fetch("/api/admin/notifications/send", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          registration_id: registrationId,
+          notification_type: "reminder_24h",
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        alert("Rappel envoye avec succes");
+      } else {
+        alert(data.message || "Erreur lors de l'envoi du rappel");
+      }
+    } catch (error) {
+      console.error("Error sending reminder:", error);
+      alert("Erreur lors de l'envoi du rappel");
+    }
+  };
+
   // Open edit modal
   const handleEdit = (formation: Formation) => {
     setEditingFormation(formation);
@@ -214,12 +287,20 @@ export default function FormationsPage() {
             Gérez les formations et leur capacité
           </p>
         </div>
-        <Button onClick={handleCreate}>
-          <svg className="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-          </svg>
-          Nouvelle formation
-        </Button>
+        <div className="flex items-center gap-3">
+          <Button variant="secondary" onClick={() => setShowNotifications(true)}>
+            <svg className="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+            </svg>
+            Notifications
+          </Button>
+          <Button onClick={handleCreate}>
+            <svg className="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+            </svg>
+            Nouvelle formation
+          </Button>
+        </div>
       </div>
 
       {/* Formations Table */}
@@ -303,8 +384,16 @@ export default function FormationsPage() {
           onClose={() => setSelectedFormation(null)}
           onCancel={handleCancelRegistration}
           onExport={handleExport}
+          onPaymentUpdate={handlePaymentUpdate}
+          onSendReminder={handleSendReminder}
         />
       )}
+
+      {/* Notification History Panel */}
+      <NotificationHistoryPanel
+        isOpen={showNotifications}
+        onClose={() => setShowNotifications(false)}
+      />
     </div>
   );
 }

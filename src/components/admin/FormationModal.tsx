@@ -43,6 +43,11 @@ export default function FormationModal({
     nombre_jours: 1,
     heures_par_jour: 7,
     prix: 0,
+    location: "",
+    location_address: "",
+    location_maps_url: "",
+    visio_link: "",
+    whatsapp_group_link: "",
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -63,6 +68,11 @@ export default function FormationModal({
         programme: formation.programme,
         objectifs: formation.objectifs,
         prerequis: formation.prerequis || undefined,
+        location: formation.location || "",
+        location_address: formation.location_address || "",
+        location_maps_url: formation.location_maps_url || "",
+        visio_link: formation.visio_link || "",
+        whatsapp_group_link: formation.whatsapp_group_link || "",
       });
     } else {
       // Reset form for new formation
@@ -76,6 +86,11 @@ export default function FormationModal({
         nombre_jours: 1,
         heures_par_jour: 7,
         prix: 0,
+        location: "",
+        location_address: "",
+        location_maps_url: "",
+        visio_link: "",
+        whatsapp_group_link: "",
       });
     }
     setErrors({});
@@ -263,6 +278,69 @@ export default function FormationModal({
             min={0}
             value={formData.prix}
             onChange={handleChange}
+          />
+        </div>
+
+        {/* Location Fields (for presentiel and both modes) */}
+        {(formData.mode === "presentiel" || formData.mode === "both") && (
+          <div className="space-y-4 p-4 rounded-lg bg-navy-600/50 border border-border">
+            <h4 className="text-sm font-medium text-teal-400">Lieu (Présentiel)</h4>
+            <div className="grid grid-cols-2 gap-4">
+              <Input
+                label="Nom du lieu"
+                name="location"
+                value={formData.location || ""}
+                onChange={handleChange}
+                placeholder="Ex: Centre de formation Casablanca"
+              />
+              <Input
+                label="Lien Google Maps"
+                name="location_maps_url"
+                value={formData.location_maps_url || ""}
+                onChange={handleChange}
+                placeholder="https://maps.google.com/..."
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-text-secondary mb-1.5">
+                Adresse complète
+              </label>
+              <textarea
+                name="location_address"
+                value={formData.location_address || ""}
+                onChange={handleChange}
+                rows={2}
+                className="w-full px-4 py-2.5 rounded-lg bg-navy-600 border border-border-light text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-teal-500/50 resize-none"
+                placeholder="Adresse complète du lieu..."
+              />
+            </div>
+          </div>
+        )}
+
+        {/* Visio Link (for visio and both modes) */}
+        {(formData.mode === "visio" || formData.mode === "both") && (
+          <div className="space-y-4 p-4 rounded-lg bg-navy-600/50 border border-border">
+            <h4 className="text-sm font-medium text-blue-400">Visioconférence</h4>
+            <Input
+              label="Lien de visio"
+              name="visio_link"
+              value={formData.visio_link || ""}
+              onChange={handleChange}
+              placeholder="https://meet.google.com/... ou https://zoom.us/..."
+            />
+          </div>
+        )}
+
+        {/* WhatsApp Group Link */}
+        <div className="space-y-4 p-4 rounded-lg bg-navy-600/50 border border-border">
+          <h4 className="text-sm font-medium text-green-400">WhatsApp</h4>
+          <Input
+            label="Lien groupe WhatsApp"
+            name="whatsapp_group_link"
+            value={formData.whatsapp_group_link || ""}
+            onChange={handleChange}
+            placeholder="https://chat.whatsapp.com/..."
+            helperText="Lien d'invitation au groupe WhatsApp de la formation"
           />
         </div>
 

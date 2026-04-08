@@ -16,7 +16,7 @@ export function generateCSV(
     "Mode",
     "Pre-inscription",
     "Statut",
-    "Semaine",
+    "Date Session",
   ];
 
   const rows = registrations.map((reg) => [
@@ -34,7 +34,7 @@ export function generateCSV(
       : reg.status === "pending"
         ? "En attente"
         : "Annule",
-    reg.formation?.week_number?.toString() || "",
+    reg.formation?.session_date || "",
   ]);
 
   // Escape and format CSV

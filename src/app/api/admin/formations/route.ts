@@ -64,7 +64,8 @@ export async function PATCH(request: NextRequest) {
     const allowedFields = [
       "titre", "description", "slug", "session_date", "max_attendees",
       "is_active", "mode", "nombre_jours", "heures_par_jour",
-      "prix", "programme", "objectifs", "prerequis"
+      "prix", "programme", "objectifs", "prerequis",
+      "location", "location_address", "location_maps_url", "visio_link", "whatsapp_group_link"
     ];
     const filteredUpdates: Record<string, unknown> = {};
     for (const [key, value] of Object.entries(updates)) {
@@ -156,6 +157,11 @@ export async function POST(request: NextRequest) {
         programme: body.programme || null,
         objectifs: body.objectifs || null,
         prerequis: body.prerequis || null,
+        location: body.location || null,
+        location_address: body.location_address || null,
+        location_maps_url: body.location_maps_url || null,
+        visio_link: body.visio_link || null,
+        whatsapp_group_link: body.whatsapp_group_link || null,
       })
       .select()
       .single();

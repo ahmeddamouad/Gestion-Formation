@@ -86,8 +86,8 @@ export async function sendEmailNotification(
                   <td>${formatDateTime(registration.created_at)}</td>
                 </tr>
                 <tr>
-                  <th>Semaine</th>
-                  <td>Semaine ${formation.week_number}</td>
+                  <th>Date de session</th>
+                  <td>${formation.session_date}</td>
                 </tr>
               </table>
               <div style="text-align: center;">
