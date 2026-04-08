@@ -19,6 +19,25 @@ export interface Formation {
   prerequis?: string | null;
   duree?: string;
   prix?: number;
+  // Structured duration fields
+  nombre_jours?: number;
+  heures_par_jour?: number;
+}
+
+// Form data for creating/editing formations
+export interface FormationFormData {
+  slug: string;
+  titre: string;
+  description: string;
+  session_date: string;
+  max_attendees: number;
+  mode: "presentiel" | "visio" | "both";
+  nombre_jours: number;
+  heures_par_jour: number;
+  prix: number;
+  programme?: string[];
+  objectifs?: string[];
+  prerequis?: string;
 }
 
 export interface Registration {

@@ -51,7 +51,7 @@ export async function GET(request: NextRequest) {
   }
 }
 
-// DELETE: Cancel a registration
+// DELETE: Cancel a registration or batch delete for completed sessions
 export async function DELETE(request: NextRequest) {
   if (!(await verifyAdmin())) {
     return NextResponse.json({ success: false, message: "Non autorise" }, { status: 401 });
@@ -60,7 +60,70 @@ export async function DELETE(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const id = searchParams.get("id");
+    const formationId = searchParams.get("formation_id");
+    const batch = searchParams.get("batch");
 
+    // Batch delete for a formation (completed sessions only)
+    if (formationId && batch === "true") {
+      // First check if the session is completed
+      const { data: formation, error: formationError } = await supabaseAdmin
+        .from("formations")
+        .select("session_date, titre")
+        .eq("id", formationId)
+        .single();
+
+      if (formationError || !formation) {
+        return NextResponse.json(
+          { success: false, message: "Formation non trouvee" },
+          { status: 404 }
+        );
+      }
+
+      // Check if session is in the past
+      const sessionDate = new Date(formation.session_date);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      if (sessionDate >= today) {
+        return NextResponse.json(
+          {
+            success: false,
+            message: "Impossible de supprimer: la session n'est pas encore terminee",
+          },
+          { status: 400 }
+        );
+      }
+
+      // Count registrations to be deleted
+      const { count } = await supabaseAdmin
+        .from("registrations")
+        .select("*", { count: "exact", head: true })
+        .eq("formation_id", formationId);
+
+      // Delete all registrations for this formation
+      const { error: deleteError } = await supabaseAdmin
+        .from("registrations")
+        .delete()
+        .eq("formation_id", formationId);
+
+      if (deleteError) throw deleteError;
+
+      // Reset current_attendees to 0
+      const { error: updateError } = await supabaseAdmin
+        .from("formations")
+        .update({ current_attendees: 0 })
+        .eq("id", formationId);
+
+      if (updateError) throw updateError;
+
+      return NextResponse.json({
+        success: true,
+        message: `${count || 0} inscription(s) supprimee(s) pour "${formation.titre}"`,
+        deleted_count: count || 0,
+      });
+    }
+
+    // Single registration cancellation
     if (!id) {
       return NextResponse.json(
         { success: false, message: "ID d'inscription requis" },
@@ -84,9 +147,9 @@ export async function DELETE(request: NextRequest) {
 
     return NextResponse.json({ success: true, message: "Inscription annulee" });
   } catch (error) {
-    console.error("Error cancelling registration:", error);
+    console.error("Error in DELETE registrations:", error);
     return NextResponse.json(
-      { success: false, message: "Erreur lors de l'annulation" },
+      { success: false, message: "Erreur lors de l'operation" },
       { status: 500 }
     );
   }
