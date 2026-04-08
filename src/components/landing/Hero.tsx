@@ -185,7 +185,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="relative w-full min-h-screen flex items-center justify-center overflow-hidden pt-24">
+    <section className="relative w-full min-h-screen flex items-center justify-center overflow-hidden pt-32">
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-navy-900 via-navy-800 to-navy-900" />
 

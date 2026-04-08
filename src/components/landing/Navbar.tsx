@@ -17,19 +17,19 @@ export default function Navbar() {
   };
 
   return (
-    <header className="fixed top-4 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-7xl z-50 rounded-2xl bg-navy-800/95 backdrop-blur-md shadow-xl shadow-black/20 border border-white/5">
-      <nav className="max-w-7xl mx-auto px-6 py-4">
+    <header className="fixed top-3 left-1/2 -translate-x-1/2 w-[calc(100%-1.5rem)] max-w-6xl z-50 rounded-xl bg-navy-800/95 backdrop-blur-md shadow-lg shadow-black/20 border border-white/5">
+      <nav className="max-w-6xl mx-auto px-5 py-2.5">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-3 group">
+          <Link href="/" className="flex items-center gap-2 group">
             <Image
               src="/logo.png"
               alt="WWP Academy"
-              width={44}
-              height={44}
+              width={36}
+              height={36}
               className="rounded-lg"
             />
-            <span className="font-display font-bold text-xl text-text-primary">
+            <span className="font-display font-bold text-lg text-text-primary">
               WWP <span className="text-teal-500">Academy</span>
             </span>
           </Link>
