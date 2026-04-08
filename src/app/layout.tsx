@@ -31,6 +31,10 @@ export const metadata: Metadata = {
     "formation presentiel",
   ],
   authors: [{ name: "World Wide Progress Academy" }],
+  icons: {
+    icon: "/logo.png",
+    apple: "/logo.png",
+  },
   openGraph: {
     title: "Formations Professionnelles | World Wide Progress Academy",
     description:
