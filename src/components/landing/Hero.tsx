@@ -3,11 +3,11 @@
 import { useEffect, useRef } from "react";
 import Button from "@/components/ui/Button";
 
-// Floating course icons representing the 4 training areas
+// Floating icons representing Power BI concepts
 const courseIcons = [
   {
-    id: "powerbi",
-    label: "Power BI",
+    id: "dashboard",
+    label: "Dashboards",
     icon: (
       <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
@@ -18,11 +18,11 @@ const courseIcons = [
     size: "w-16 h-16",
   },
   {
-    id: "marketing",
-    label: "Marketing",
+    id: "data",
+    label: "Donnees",
     icon: (
       <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" />
       </svg>
     ),
     position: "top-[20%] right-[12%]",
@@ -30,12 +30,11 @@ const courseIcons = [
     size: "w-14 h-14",
   },
   {
-    id: "automation",
-    label: "Automation",
+    id: "analytics",
+    label: "Analytics",
     icon: (
       <svg className="w-9 h-9" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
       </svg>
     ),
     position: "bottom-[25%] left-[8%]",
@@ -43,11 +42,11 @@ const courseIcons = [
     size: "w-16 h-16",
   },
   {
-    id: "rh",
-    label: "RH",
+    id: "kpi",
+    label: "KPIs",
     icon: (
       <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
       </svg>
     ),
     position: "bottom-[30%] right-[10%]",
@@ -320,10 +319,10 @@ export default function Hero() {
 
         {/* Main headline */}
         <h1 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-text-primary leading-[1.1] mb-8 animate-fade-in-up stagger-2">
-          Developpez vos
+          Maitrisez
           <br />
           <span className="relative inline-block mt-2">
-            <span className="gradient-text">competences pro</span>
+            <span className="gradient-text">Power BI</span>
             {/* Animated underline */}
             <svg
               className="absolute -bottom-2 left-0 w-full h-3 text-teal-500/30"
@@ -344,19 +343,19 @@ export default function Hero() {
 
         {/* Subheadline */}
         <p className="text-lg sm:text-xl text-text-muted max-w-2xl mx-auto mb-12 animate-fade-in-up stagger-3 leading-relaxed">
-          Des formations pratiques en{" "}
-          <span className="text-text-secondary">Power BI</span>,{" "}
-          <span className="text-text-secondary">Digital Marketing</span>,{" "}
-          <span className="text-text-secondary">Automatisation</span> et{" "}
-          <span className="text-text-secondary">RH</span>.
+          Creez des{" "}
+          <span className="text-text-secondary">tableaux de bord interactifs</span>,{" "}
+          analysez vos{" "}
+          <span className="text-text-secondary">donnees</span> et prenez des{" "}
+          <span className="text-text-secondary">decisions eclairees</span>.
           <br className="hidden sm:block" />
-          En presentiel ou a distance, selon vos besoins.
+          Formation pratique en presentiel ou a distance.
         </p>
 
         {/* CTA Buttons */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in-up stagger-4">
           <Button size="lg" onClick={scrollToFormations} className="group">
-            Decouvrir les formations
+            S&apos;inscrire maintenant
             <svg
               className="w-5 h-5 transition-transform group-hover:translate-x-1"
               fill="none"
@@ -398,25 +397,24 @@ export default function Hero() {
           </button>
         </div>
 
-        {/* Feature pills - now with animated icons */}
+        {/* Feature pills - Power BI focused */}
         <div className="mt-16 flex flex-wrap items-center justify-center gap-3 animate-fade-in-up stagger-5">
           {[
             {
               icon: (
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 14l9-5-9-5-9 5 9 5z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                 </svg>
               ),
-              text: "Formateurs experts",
+              text: "Dashboards interactifs",
             },
             {
               icon: (
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
               ),
-              text: "Presentiel & Visio",
+              text: "DAX & Power Query",
             },
             {
               icon: (
@@ -424,15 +422,15 @@ export default function Hero() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                 </svg>
               ),
-              text: "100% pratique",
+              text: "Projets pratiques",
             },
             {
               icon: (
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
                 </svg>
               ),
-              text: "Suivi personnalise",
+              text: "Certification",
             },
           ].map((item) => (
             <div

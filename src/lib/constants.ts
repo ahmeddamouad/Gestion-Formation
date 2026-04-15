@@ -33,21 +33,26 @@ export const FORMATIONS_DATA = [
 
 export const LANDING_STATS = {
   totalLearners: 500,
-  formationsCount: 4,
+  formationsCount: 1,
   satisfactionRate: 98,
   yearsExperience: 5,
 };
 
 export const FAQ_ITEMS = [
   {
-    question: "Comment se deroule une formation en presentiel ?",
+    question: "Quels sont les prerequis pour la formation Power BI ?",
     answer:
-      "Nos formations en presentiel se deroulent dans nos locaux equipes. Vous beneficiez d'un accompagnement personnalise avec nos formateurs experts, de supports de cours et d'exercices pratiques. Le groupe est limite a 15 personnes pour garantir une attention optimale.",
+      "Aucun prerequis technique n'est necessaire. Une connaissance de base d'Excel est un plus, mais pas obligatoire. La formation est concu pour les debutants comme pour ceux qui souhaitent approfondir leurs connaissances.",
   },
   {
-    question: "Puis-je suivre une formation en visioconference ?",
+    question: "Qu'est-ce que je vais apprendre dans cette formation ?",
     answer:
-      "Oui, toutes nos formations sont disponibles en visioconference. Vous recevrez un lien de connexion avant la session. Vous aurez acces aux memes contenus et pourrez interagir en direct avec le formateur et les autres participants.",
+      "Vous apprendrez a connecter des sources de donnees, transformer et nettoyer vos donnees avec Power Query, creer des modeles de donnees, ecrire des formules DAX, et concevoir des tableaux de bord interactifs professionnels.",
+  },
+  {
+    question: "Puis-je suivre la formation en visioconference ?",
+    answer:
+      "Oui, la formation est disponible en presentiel et en visioconference. Vous recevrez un lien de connexion avant la session et aurez acces aux memes contenus et exercices pratiques.",
   },
   {
     question: "Que se passe-t-il si la session est complete ?",
@@ -55,40 +60,35 @@ export const FAQ_ITEMS = [
       "Si la session est complete, vous pouvez vous pre-inscrire pour la prochaine session. Vous serez automatiquement inscrit(e) des qu'une place se libere ou pour la prochaine date disponible.",
   },
   {
-    question: "Quels sont les modes de paiement acceptes ?",
-    answer:
-      "Nous acceptons les virements bancaires, les cartes de credit et le financement par votre entreprise ou OPCO. Contactez-nous pour discuter des options de financement adaptees a votre situation.",
-  },
-  {
     question: "Recevrai-je une certification apres la formation ?",
     answer:
-      "Oui, une attestation de formation vous sera delivree a l'issue de chaque session. Cette attestation detaille les competences acquises et peut etre utilisee pour votre developpement professionnel.",
+      "Oui, une attestation de formation vous sera delivree a l'issue de la session. Cette attestation detaille les competences acquises en Power BI et peut etre utilisee pour votre developpement professionnel.",
   },
 ];
 
 export const FEATURES = [
   {
-    title: "Formateurs Experts",
+    title: "Formateur Expert Power BI",
     description:
-      "Nos formateurs sont des professionnels avec plus de 10 ans d'experience dans leur domaine.",
+      "Notre formateur est certifie Microsoft et possede plus de 10 ans d'experience en Business Intelligence.",
     icon: "academic-cap",
   },
   {
-    title: "Flexibilite Totale",
+    title: "Projets Reels",
     description:
-      "Choisissez entre presentiel et visio selon vos preferences et contraintes.",
+      "Travaillez sur des cas pratiques bases sur des donnees reelles d'entreprise pour une experience concrete.",
     icon: "adjustments",
   },
   {
-    title: "Suivi Personnalise",
+    title: "Suivi Post-Formation",
     description:
-      "Un accompagnement individuel pendant et apres la formation pour garantir votre reussite.",
+      "Beneficiez d'un accompagnement personnalise apres la formation pour repondre a vos questions.",
     icon: "support",
   },
   {
     title: "Satisfaction Garantie",
     description:
-      "98% de nos apprenants recommandent nos formations. Votre satisfaction est notre priorite.",
+      "98% de nos apprenants recommandent notre formation Power BI. Votre reussite est notre priorite.",
     icon: "badge-check",
   },
 ];

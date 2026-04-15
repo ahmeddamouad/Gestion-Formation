@@ -17,7 +17,7 @@ export default function FAQSection() {
             Questions <span className="gradient-text">frequentes</span>
           </h2>
           <p className="text-text-muted">
-            Trouvez les reponses aux questions les plus courantes sur nos formations.
+            Tout ce que vous devez savoir sur notre formation Power BI.
           </p>
         </div>
 

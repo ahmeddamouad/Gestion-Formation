@@ -42,10 +42,10 @@ export default function WhyUsSection() {
             Nos avantages
           </span>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-text-primary font-display mb-6">
-            Pourquoi nous <span className="gradient-text">choisir</span> ?
+            Pourquoi choisir notre <span className="gradient-text">formation Power BI</span> ?
           </h2>
           <p className="text-text-muted max-w-2xl mx-auto text-lg">
-            Des formations qui font la difference pour votre carriere.
+            Une formation complete pour maitriser la Business Intelligence.
           </p>
         </div>
 
@@ -83,7 +83,7 @@ export default function WhyUsSection() {
             onClick={() => document.getElementById("formations")?.scrollIntoView({ behavior: "smooth" })}
             className="inline-flex items-center gap-2 text-teal-400 hover:text-teal-300 transition-colors cursor-pointer group"
           >
-            <span className="font-medium">Voir nos formations</span>
+            <span className="font-medium">S&apos;inscrire a la formation</span>
             <svg className="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
             </svg>

@@ -37,14 +37,14 @@ export default function FormationsSection({
         {/* Section header */}
         <div className="text-center mb-16">
           <span className="inline-block px-4 py-1.5 rounded-full bg-teal-500/10 border border-teal-500/20 text-teal-400 text-sm font-medium mb-4">
-            Nos programmes
+            Formation Power BI
           </span>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-text-primary font-display mb-6">
-            Formations <span className="gradient-text">qualifiantes</span>
+            Devenez expert en <span className="gradient-text">Business Intelligence</span>
           </h2>
           <p className="text-text-muted max-w-2xl mx-auto text-lg">
-            Choisissez la formation adaptee a vos objectifs.
-            Disponibles en presentiel et en visioconference.
+            Maitrisez Power BI et transformez vos donnees en decisions strategiques.
+            Disponible en presentiel et en visioconference.
           </p>
         </div>
 
