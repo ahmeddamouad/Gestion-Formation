@@ -12,6 +12,7 @@ import {
   WhyUsSection,
   FAQSection,
   Footer,
+  DashboardShowcase,
 } from "@/components/landing";
 import FormationDetailModal from "@/components/landing/FormationDetailModal";
 import PackSelectionBar from "@/components/landing/PackSelectionBar";
@@ -124,6 +125,7 @@ export default function LandingPage() {
         onSelectForPack={handleSelectForPack}
         selectedFormationIds={selectedForPack}
       />
+      <DashboardShowcase />
       <StatsCounter />
       <WhyUsSection />
       <FAQSection />

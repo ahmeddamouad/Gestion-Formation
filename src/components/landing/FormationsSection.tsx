@@ -23,6 +23,11 @@ export default function FormationsSection({
   onSelectForPack,
   selectedFormationIds = new Set(),
 }: FormationsSectionProps) {
+  // Temporarily show only Power BI formation for traffic building
+  const visibleFormations = formations.filter(f =>
+    f.slug?.toLowerCase().includes('power')
+  );
+
   return (
     <section id="formations" className="w-full py-24 relative">
       {/* Background accent */}
@@ -41,16 +46,6 @@ export default function FormationsSection({
             Choisissez la formation adaptee a vos objectifs.
             Disponibles en presentiel et en visioconference.
           </p>
-
-          {/* Pack hint */}
-          {onSelectForPack && (
-            <div className="mt-6 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-teal-500/10 border border-teal-500/20 text-teal-400 text-sm">
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-              </svg>
-              <span>Ajoutez 2+ formations au pack pour beneficier d&apos;une reduction</span>
-            </div>
-          )}
         </div>
 
         {/* Loading state */}
@@ -72,10 +67,10 @@ export default function FormationsSection({
           </div>
         )}
 
-        {/* Formations grid - 2 columns for better readability */}
-        {!isLoading && !error && formations.length > 0 && (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {formations.map((formation, index) => (
+        {/* Formations grid */}
+        {!isLoading && !error && visibleFormations.length > 0 && (
+          <div className="max-w-xl mx-auto">
+            {visibleFormations.map((formation, index) => (
               <div
                 key={formation.id}
                 className="animate-fade-in-up"
@@ -94,7 +89,7 @@ export default function FormationsSection({
         )}
 
         {/* Empty state */}
-        {!isLoading && !error && formations.length === 0 && (
+        {!isLoading && !error && visibleFormations.length === 0 && (
           <div className="text-center py-20">
             <div className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-navy-700 flex items-center justify-center">
               <svg className="w-8 h-8 text-text-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor">

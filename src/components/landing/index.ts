@@ -9,3 +9,4 @@ export { default as StatsCounter } from "./StatsCounter";
 export { default as WhyUsSection } from "./WhyUsSection";
 export { default as FAQSection } from "./FAQSection";
 export { default as Footer } from "./Footer";
+export { default as DashboardShowcase } from "./DashboardShowcase";

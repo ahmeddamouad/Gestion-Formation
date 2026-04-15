@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { Formation } from "@/types";
 import Button from "@/components/ui/Button";
-import Badge from "@/components/ui/Badge";
 import ModeToggle from "./ModeToggle";
 
 interface FormationCardProps {
@@ -50,10 +49,7 @@ export default function FormationCard({
     "presentiel"
   );
 
-  const availableSpots = formation.max_attendees - formation.current_attendees;
-  const isFull = availableSpots <= 0;
-  const isAlmostFull = availableSpots > 0 && availableSpots <= 3;
-  const fillPercentage = Math.min(100, (formation.current_attendees / formation.max_attendees) * 100);
+  const isFull = formation.current_attendees >= formation.max_attendees;
 
   const handleRegister = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -104,17 +100,6 @@ export default function FormationCard({
               )}
             </div>
           </div>
-          <div>
-            {isFull ? (
-              <Badge variant="danger" dot>Complet</Badge>
-            ) : isAlmostFull ? (
-              <Badge variant="warning" dot>
-                {availableSpots} place{availableSpots > 1 ? "s" : ""}
-              </Badge>
-            ) : (
-              <Badge variant="success" dot>Disponible</Badge>
-            )}
-          </div>
         </div>
 
         {/* Description */}
@@ -137,28 +122,6 @@ export default function FormationCard({
             </svg>
           </button>
         )}
-
-        {/* Progress bar */}
-        <div className="mb-6">
-          <div className="flex items-center justify-between text-sm mb-2">
-            <span className="text-text-muted">Places reservees</span>
-            <span className="text-text-secondary font-medium">
-              {formation.current_attendees}/{formation.max_attendees}
-            </span>
-          </div>
-          <div className="h-2 bg-navy-600 rounded-full overflow-hidden">
-            <div
-              className={`h-full rounded-full transition-all duration-500 ${
-                isFull
-                  ? "bg-red-500"
-                  : isAlmostFull
-                  ? "bg-amber-500"
-                  : "bg-teal-500"
-              }`}
-              style={{ width: `${fillPercentage}%` }}
-            />
-          </div>
-        </div>
 
         {/* Mode selection + CTA buttons */}
         <div className="flex flex-col gap-4" onClick={(e) => e.stopPropagation()}>
