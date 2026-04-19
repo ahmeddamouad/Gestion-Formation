@@ -2,7 +2,7 @@
 
 import { useState, useCallback } from "react";
 import { Formation } from "@/types";
-import { useFormations } from "@/hooks/useFormations";
+import { useMockFormations } from "@/lib/mockFormations";
 import {
   Navbar,
   Hero,
@@ -19,7 +19,7 @@ import PackSelectionBar from "@/components/landing/PackSelectionBar";
 import PackRegistrationModal from "@/components/landing/PackRegistrationModal";
 
 export default function LandingPage() {
-  const { formations, isLoading, error, refetch } = useFormations();
+  const { formations, isLoading, error, refetch } = useMockFormations();
 
   // Registration modal state
   const [modalOpen, setModalOpen] = useState(false);
@@ -121,9 +121,6 @@ export default function LandingPage() {
         isLoading={isLoading}
         error={error}
         onRegister={handleRegister}
-        onShowDetails={handleShowDetails}
-        onSelectForPack={handleSelectForPack}
-        selectedFormationIds={selectedForPack}
       />
       <DashboardShowcase />
       <StatsCounter />
@@ -137,8 +134,6 @@ export default function LandingPage() {
         onClose={handleCloseModal}
         formation={selectedFormation}
         initialMode={selectedMode}
-        onAddToPack={handleAddToPackFromModal}
-        isInPack={selectedFormation ? selectedForPack.has(selectedFormation.id) : false}
       />
 
       {/* Formation Detail Modal */}

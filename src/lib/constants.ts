@@ -1,36 +1,5 @@
 // Application constants
 
-export const FORMATIONS_DATA = [
-  {
-    slug: "powerbi",
-    titre: "Formation Power BI",
-    description:
-      "Maitrisez la visualisation de donnees et la business intelligence avec Power BI. Apprenez a creer des tableaux de bord interactifs, analyser vos donnees et prendre des decisions eclairees.",
-    icon: "chart-bar",
-  },
-  {
-    slug: "marketing",
-    titre: "Formation Digital Marketing",
-    description:
-      "Strategies digitales, reseaux sociaux, SEO et campagnes publicitaires. Developpez votre presence en ligne et atteignez vos objectifs commerciaux.",
-    icon: "megaphone",
-  },
-  {
-    slug: "automatisation",
-    titre: "Formation Automatisation & Fullstack Vibe Coding",
-    description:
-      "No-code, automatisation de workflows, et developpement fullstack moderne. Creez des applications completes sans ecrire des milliers de lignes de code.",
-    icon: "cog",
-  },
-  {
-    slug: "rh",
-    titre: "Formation Ressources Humaines",
-    description:
-      "Gestion des talents, recrutement moderne et developpement organisationnel. Transformez votre departement RH avec les meilleures pratiques actuelles.",
-    icon: "users",
-  },
-] as const;
-
 export const LANDING_STATS = {
   totalLearners: 500,
   formationsCount: 1,

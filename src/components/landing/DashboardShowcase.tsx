@@ -10,12 +10,6 @@ const dashboards = [
     image: "/dashboard-skt.png",
   },
   {
-    id: 2,
-    title: "Dashboard RLS Security",
-    description: "Securite au niveau des lignes (Row Level Security)",
-    image: "/dashboard-rls.png",
-  },
-  {
     id: 3,
     title: "Dashboard Walmart",
     description: "Analyse des ventes et performances retail",
@@ -45,7 +39,7 @@ export default function DashboardShowcase() {
         </div>
 
         {/* Dashboard grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
           {dashboards.map((dashboard, index) => (
             <div
               key={dashboard.id}
@@ -53,7 +47,7 @@ export default function DashboardShowcase() {
               style={{ animationDelay: `${index * 100}ms` }}
             >
               {/* Image container */}
-              <div className="relative aspect-[16/10] overflow-hidden">
+              <div className="relative aspect-[16/10] overflow-hidden flex items-center justify-center">
                 <Image
                   src={dashboard.image}
                   alt={dashboard.title}

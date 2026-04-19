@@ -8,9 +8,6 @@ import ModeToggle from "./ModeToggle";
 interface FormationCardProps {
   formation: Formation;
   onRegister: (formation: Formation, mode: "presentiel" | "visio") => void;
-  onShowDetails?: (formation: Formation) => void;
-  onSelectForPack?: (formation: Formation, selected: boolean) => void;
-  isSelectedForPack?: boolean;
 }
 
 // Icon components
@@ -41,65 +38,32 @@ const icons: Record<string, React.ReactNode> = {
 export default function FormationCard({
   formation,
   onRegister,
-  onShowDetails,
-  onSelectForPack,
-  isSelectedForPack = false,
 }: FormationCardProps) {
   const [selectedMode, setSelectedMode] = useState<"presentiel" | "visio">(
     "presentiel"
   );
-
-  const isFull = formation.current_attendees >= formation.max_attendees;
 
   const handleRegister = (e: React.MouseEvent) => {
     e.stopPropagation();
     onRegister(formation, selectedMode);
   };
 
-  const handleCardClick = () => {
-    if (onShowDetails) {
-      onShowDetails(formation);
-    }
-  };
-
-  const handlePackToggle = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (onSelectForPack) {
-      onSelectForPack(formation, !isSelectedForPack);
-    }
-  };
-
   return (
     <div
-      onClick={handleCardClick}
-      className={`
-        group relative bg-navy-700/50 rounded-2xl border overflow-hidden transition-all duration-300
-        hover:shadow-xl hover:shadow-teal-500/5 cursor-pointer
-        ${isSelectedForPack
-          ? "border-teal-500 ring-2 ring-teal-500/20"
-          : "border-white/5 hover:border-teal-500/20"
-        }
-      `}
+      className="group relative bg-navy-700/50 rounded-2xl border border-white/5 overflow-hidden transition-all duration-300 hover:shadow-xl hover:shadow-teal-500/5 hover:border-teal-500/20"
     >
       {/* Gradient border effect on hover */}
       <div className="absolute inset-0 bg-gradient-to-br from-teal-500/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
 
       <div className="relative p-6 sm:p-8">
-        {/* Top row: Icon + Badge */}
-        <div className="flex items-start justify-between mb-6">
-          <div className="flex items-center gap-4">
-            <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-teal-500/20 to-teal-600/10 border border-teal-500/20 flex items-center justify-center text-teal-400 group-hover:scale-110 transition-transform">
-              {icons[formation.slug] || icons.powerbi}
-            </div>
-            <div>
-              <h3 className="text-xl font-semibold text-text-primary font-display group-hover:text-teal-400 transition-colors">
-                {formation.titre}
-              </h3>
-              {formation.prix && formation.prix > 0 && (
-                <span className="text-sm text-teal-400 font-medium mt-1 block">{formation.prix} DH</span>
-              )}
-            </div>
+        {/* Top row: Centered Icon + Title */}
+        <div className="flex flex-col items-center text-center mb-6">
+          <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-teal-500/20 to-teal-600/10 border border-teal-500/20 flex items-center justify-center text-teal-400 group-hover:scale-110 transition-transform mb-3">
+            {icons[formation.slug] || icons.powerbi}
           </div>
+          <h3 className="text-xl font-semibold text-text-primary font-display group-hover:text-teal-400 transition-colors">
+            {formation.titre}
+          </h3>
         </div>
 
         {/* Description */}
@@ -107,63 +71,31 @@ export default function FormationCard({
           {formation.description}
         </p>
 
-        {/* View details link */}
-        {onShowDetails && (
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              onShowDetails(formation);
-            }}
-            className="text-teal-400 text-sm hover:text-teal-300 transition-colors mb-4 flex items-center gap-1"
-          >
-            Voir le programme complet
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
+        {/* Programme display */}
+        {formation.programme && formation.programme.length > 0 && (
+          <div className="mb-4 pb-4 border-b border-white/5">
+            <h4 className="text-sm font-semibold text-teal-400 mb-2">Programme:</h4>
+            <ul className="space-y-1">
+              {formation.programme.map((item, index) => (
+                <li key={index} className="text-sm text-text-muted flex items-start gap-2">
+                  <span className="text-teal-400 mt-1">•</span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
         )}
 
-        {/* Mode selection + CTA buttons */}
+        {/* Mode selection + CTA button */}
         <div className="flex flex-col gap-4" onClick={(e) => e.stopPropagation()}>
           <ModeToggle value={selectedMode} onChange={setSelectedMode} />
-          <div className="flex items-center gap-3">
-            {onSelectForPack && (
-              <Button
-                onClick={handlePackToggle}
-                variant={isSelectedForPack ? "primary" : "secondary"}
-                className={`flex-1 ${isSelectedForPack ? "bg-teal-600 hover:bg-teal-700" : ""}`}
-              >
-                {isSelectedForPack ? (
-                  <>
-                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
-                    Dans le pack
-                  </>
-                ) : (
-                  <>
-                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-                    </svg>
-                    Ajouter au pack
-                  </>
-                )}
-              </Button>
-            )}
-            <Button onClick={handleRegister} className="flex-1 whitespace-nowrap">
-              {isFull ? "Pre-inscription" : "S'inscrire"}
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-              </svg>
-            </Button>
-          </div>
+          <Button onClick={handleRegister} className="w-full whitespace-nowrap">
+            S'inscrire
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            </svg>
+          </Button>
         </div>
-
-        {isFull && (
-          <p className="text-xs text-text-muted text-center mt-4 pt-4 border-t border-white/5">
-            Inscription pour la session de la semaine prochaine
-          </p>
-        )}
       </div>
     </div>
   );

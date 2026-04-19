@@ -29,28 +29,6 @@ export interface Formation {
   whatsapp_group_link?: string;
 }
 
-// Form data for creating/editing formations
-export interface FormationFormData {
-  slug: string;
-  titre: string;
-  description: string;
-  session_date: string;
-  max_attendees: number;
-  mode: "presentiel" | "visio" | "both";
-  nombre_jours: number;
-  heures_par_jour: number;
-  prix: number;
-  programme?: string[];
-  objectifs?: string[];
-  prerequis?: string;
-  // Location fields
-  location?: string;
-  location_address?: string;
-  location_maps_url?: string;
-  visio_link?: string;
-  whatsapp_group_link?: string;
-}
-
 export interface Registration {
   id: string;
   formation_id: string;
@@ -147,25 +125,6 @@ export interface Notification {
   formation?: Formation;
 }
 
-// Payment update data
-export interface PaymentUpdateData {
-  payment_status: "pending" | "paid" | "refunded";
-  payment_amount?: number;
-  send_confirmation?: boolean;
-}
-
-export interface DashboardStats {
-  total_registrations: number;
-  weekly_registrations: number;
-  full_sessions: number;
-  pending_preregistrations: number;
-}
-
-export interface AdminSession {
-  isAuthenticated: boolean;
-  expiresAt: number;
-}
-
 // Form validation errors
 export interface FormErrors {
   prenom?: string;
@@ -221,19 +180,4 @@ export interface Toast {
   type: "success" | "error" | "info" | "warning";
   message: string;
   duration?: number;
-}
-
-// Table sort configuration
-export interface SortConfig {
-  key: string;
-  direction: "asc" | "desc";
-}
-
-// Filter configuration for registrations
-export interface RegistrationFilters {
-  status?: "confirmed" | "pending" | "cancelled" | "all";
-  mode?: "presentiel" | "visio" | "all";
-  isPreregistration?: boolean | "all";
-  paymentStatus?: "pending" | "paid" | "refunded" | "all";
-  searchQuery?: string;
 }

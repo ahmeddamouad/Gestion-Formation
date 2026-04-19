@@ -9,9 +9,6 @@ interface FormationsSectionProps {
   isLoading: boolean;
   error: string | null;
   onRegister: (formation: Formation, mode: "presentiel" | "visio") => void;
-  onShowDetails?: (formation: Formation) => void;
-  onSelectForPack?: (formation: Formation, selected: boolean) => void;
-  selectedFormationIds?: Set<string>;
 }
 
 export default function FormationsSection({
@@ -19,9 +16,6 @@ export default function FormationsSection({
   isLoading,
   error,
   onRegister,
-  onShowDetails,
-  onSelectForPack,
-  selectedFormationIds = new Set(),
 }: FormationsSectionProps) {
   // Temporarily show only Power BI formation for traffic building
   const visibleFormations = formations.filter(f =>
@@ -79,9 +73,6 @@ export default function FormationsSection({
                 <FormationCard
                   formation={formation}
                   onRegister={onRegister}
-                  onShowDetails={onShowDetails}
-                  onSelectForPack={onSelectForPack}
-                  isSelectedForPack={selectedFormationIds.has(formation.id)}
                 />
               </div>
             ))}
