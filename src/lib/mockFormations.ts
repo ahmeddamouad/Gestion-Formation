@@ -9,12 +9,16 @@ export const mockFormations: Formation[] = [
     slug: "power-bi",
     titre: "Formation Power BI",
     description:
-      "Maîtrisez Power BI et transformez vos données en décisions stratégiques.",
+      "Maitrisez la visualisation de donnees et la business intelligence avec Power BI. Apprenez a creer des tableaux de bord interactifs, analyser vos donnees et prendre des decisions eclairees.",
     programme: [
-      "Introduction à Power BI et Business Intelligence",
-      "Modélisation des données et ETL",
-      "Visualisations avancées et dashboards",
-      "Analyses prédictives et KPIs",
+      "Introduction a Power BI et son ecosysteme",
+      "Connexion aux sources de donnees (Excel, SQL, API)",
+      "Transformation des donnees avec Power Query",
+      "Modelisation des donnees et relations",
+      "Creation de visualisations interactives",
+      "Mesures DAX et calculs avances",
+      "Tableaux de bord et rapports professionnels",
+      "Publication et partage sur Power BI Service",
     ],
     objectifs: [
       "Maîtriser les fondamentaux de Power BI",
