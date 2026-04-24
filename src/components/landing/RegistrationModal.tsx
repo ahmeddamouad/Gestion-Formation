@@ -1,13 +1,13 @@
 "use client";
 
 import { useState, FormEvent } from "react";
+import emailjs from "@emailjs/browser";
 import { Formation, RegistrationFormData, FormErrors } from "@/types";
 import Modal from "@/components/ui/Modal";
 import Input from "@/components/ui/Input";
 import Button from "@/components/ui/Button";
 import ModeToggle from "./ModeToggle";
 import { validateRegistrationForm, hasErrors } from "@/lib/utils/validators";
-import { SUCCESS_MESSAGES } from "@/lib/constants";
 
 interface RegistrationModalProps {
   isOpen: boolean;
@@ -33,15 +33,9 @@ export default function RegistrationModal({
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const [isPreregistration, setIsPreregistration] = useState(false);
-
-  const isFull = formation
-    ? formation.current_attendees >= formation.max_attendees
-    : false;
 
   const handleChange = (field: keyof RegistrationFormData, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
-    // Clear error when user starts typing
     if (errors[field as keyof FormErrors]) {
       setErrors((prev) => ({ ...prev, [field]: undefined }));
     }
@@ -52,7 +46,6 @@ export default function RegistrationModal({
 
     if (!formation) return;
 
-    // Validate form
     const validationErrors = validateRegistrationForm(formData);
     if (hasErrors(validationErrors)) {
       setErrors(validationErrors);
@@ -63,33 +56,29 @@ export default function RegistrationModal({
     setErrors({});
 
     try {
-      const response = await fetch("/api/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...formData,
-          formationId: formation.id,
-        }),
-      });
-
-      const result = await response.json();
-
-      if (!response.ok || !result.success) {
-        setErrors({ general: result.message || "Une erreur est survenue" });
-        return;
-      }
-
+      await emailjs.send(
+        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
+        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
+        {
+          formation_titre: formation.titre,
+          prenom: formData.prenom,
+          nom: formData.nom,
+          email: formData.email,
+          telephone: formData.telephone,
+          entreprise: formData.entreprise || "—",
+          mode: formData.mode === "presentiel" ? "Présentiel" : "Visio",
+        },
+        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
+      );
       setIsSuccess(true);
-      setIsPreregistration(result.is_preregistration || false);
     } catch {
-      setErrors({ general: "Erreur de connexion. Veuillez reessayer." });
+      setErrors({ general: "Erreur lors de l'envoi. Veuillez reessayer." });
     } finally {
       setIsSubmitting(false);
     }
   };
 
   const handleClose = () => {
-    // Reset form state
     setFormData({
       prenom: "",
       nom: "",
@@ -100,7 +89,6 @@ export default function RegistrationModal({
     });
     setErrors({});
     setIsSuccess(false);
-    setIsPreregistration(false);
     onClose();
   };
 
@@ -132,28 +120,16 @@ export default function RegistrationModal({
             </svg>
           </div>
           <h3 className="text-xl font-semibold text-text-primary mb-2">
-            {isPreregistration ? "Pre-inscription enregistree !" : "Merci pour votre inscription !"}
+            Merci pour votre inscription !
           </h3>
           <p className="text-text-muted mb-6">
-            {isPreregistration
-              ? SUCCESS_MESSAGES.preregistrationConfirmed
-              : SUCCESS_MESSAGES.registrationConfirmed}
+            Votre demande a ete enregistree. Vous recevrez une confirmation par email dans les plus brefs delais.
           </p>
           <Button onClick={handleClose}>Fermer</Button>
         </div>
       ) : (
         // Form state
         <form onSubmit={handleSubmit} className="p-6">
-          {/* Pre-registration notice */}
-          {isFull && (
-            <div className="mb-6 p-4 rounded-lg bg-amber-500/20 border border-amber-500/30">
-              <p className="text-amber-400 text-sm">
-                <strong>Session complete.</strong> Vous serez pre-inscrit(e) pour
-                la prochaine session disponible.
-              </p>
-            </div>
-          )}
-
           {/* Formation info */}
           <div className="mb-6 p-4 rounded-lg bg-navy-600 border border-border">
             <p className="text-sm text-text-muted mb-1">Formation selectionnee</p>
@@ -254,7 +230,7 @@ export default function RegistrationModal({
               Annuler
             </Button>
             <Button type="submit" isLoading={isSubmitting} fullWidth>
-              {isFull ? "Confirmer ma pre-inscription" : "Confirmer mon inscription"}
+              Confirmer mon inscription
             </Button>
           </div>
         </form>

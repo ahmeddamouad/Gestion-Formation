@@ -15,7 +15,7 @@ Core business logic: Each formation session has limited seats. When full, visito
 - **Framework**: Next.js 14 (App Router)
 - **Database**: Supabase (PostgreSQL with real-time subscriptions)
 - **Styling**: Tailwind CSS
-- **Notifications**: WhatsApp (Twilio), Email (Resend/SendGrid), Google Sheets API
+- **Notifications**: WhatsApp (Twilio), Email (EmailJS backend), Google Sheets API
 
 ## Commands
 
@@ -80,7 +80,10 @@ ADMIN_EMAIL=
 ADMIN_WHATSAPP_NUMBER=
 TWILIO_ACCOUNT_SID=
 TWILIO_AUTH_TOKEN=
-RESEND_API_KEY=
+EMAILJS_SERVICE_ID=
+EMAILJS_TEMPLATE_ID=
+EMAILJS_PUBLIC_KEY=
+EMAILJS_PRIVATE_KEY=
 GOOGLE_SHEET_ID=
 GOOGLE_SERVICE_ACCOUNT_JSON=
 ```

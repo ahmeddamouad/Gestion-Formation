@@ -23,7 +23,7 @@ Application web de gestion des inscriptions aux formations professionnelles.
 ### Notifications automatiques
 A chaque nouvelle inscription, trois notifications sont envoyees en parallele :
 - **WhatsApp** : Message au numero de l'administrateur via Twilio
-- **Email** : Email HTML detaille via Resend
+- **Email** : Email HTML detaille via EmailJS (Execute cote Serveur Node.js)
 - **Google Sheets** : Ajout d'une ligne dans un tableur Google
 
 ## Technologies utilisees
@@ -31,7 +31,7 @@ A chaque nouvelle inscription, trois notifications sont envoyees en parallele :
 - **Framework** : Next.js 14 (App Router)
 - **Base de donnees** : Supabase (PostgreSQL avec real-time)
 - **Stylisation** : Tailwind CSS
-- **Notifications** : Twilio (WhatsApp), Resend (Email), Google Sheets API
+- **Notifications** : Twilio (WhatsApp), EmailJS (Email Serveur), Google Sheets API
 - **Authentification** : JWT avec cookies HTTP-only
 
 ## Installation
@@ -41,7 +41,7 @@ A chaque nouvelle inscription, trois notifications sont envoyees en parallele :
 - Node.js 18+ installe
 - Compte Supabase (gratuit)
 - Compte Twilio (optionnel, pour WhatsApp)
-- Compte Resend (optionnel, pour Email)
+- Compte EmailJS (optionnel, pour envoi d'email backend)
 - Compte Google Cloud (optionnel, pour Google Sheets)
 
 ### Etapes d'installation
@@ -108,11 +108,12 @@ A chaque nouvelle inscription, trois notifications sont envoyees en parallele :
 2. Activez le sandbox WhatsApp ou achetez un numero
 3. Recuperez vos identifiants dans la console
 
-### Resend (Email)
+### EmailJS (Email)
 
-1. Creez un compte sur [resend.com](https://resend.com)
-2. Verifiez votre domaine d'envoi
-3. Creez une cle API
+1. Creez un compte sur [emailjs.com](https://www.emailjs.com/)
+2. Creez un "Service" (ex: Default) et recuperez le `Service ID` (`EMAILJS_SERVICE_ID`)
+3. Creez un "Email Template" avec les variables que vous souhaitez (ex: `{{html_content}}` ou `{{prenom}}`, `{{nom}}`, etc.), et recuperez le `Template ID` (`EMAILJS_TEMPLATE_ID`)
+4. Dans Account -> General, recuperez la `Public Key` (`EMAILJS_PUBLIC_KEY`) et la `Private Key` (`EMAILJS_PRIVATE_KEY`) pour l'integration serveur.
 
 ### Google Sheets
 

@@ -21,13 +21,71 @@ export interface Formation {
   // Structured duration fields
   nombre_jours?: number;
   heures_par_jour?: number;
-  // Location fields (for WhatsApp automation)
+  // Location fields
   location?: string;
   location_address?: string;
   location_maps_url?: string;
   visio_link?: string;
   whatsapp_group_link?: string;
 }
+
+export interface RegistrationFormData {
+  formationId: string;
+  prenom: string;
+  nom: string;
+  email: string;
+  telephone: string;
+  entreprise?: string;
+  mode: "presentiel" | "visio";
+}
+
+// Form validation errors
+export interface FormErrors {
+  prenom?: string;
+  nom?: string;
+  email?: string;
+  telephone?: string;
+  entreprise?: string;
+  mode?: string;
+  general?: string;
+}
+
+// Formation card props
+export interface FormationCardProps {
+  formation: Formation;
+  onRegister: (formation: Formation, mode: "presentiel" | "visio") => void;
+  onShowDetails?: (formation: Formation) => void;
+}
+
+// Stats for landing page
+export interface LandingStats {
+  totalLearners: number;
+  formationsCount: number;
+  satisfactionRate: number;
+  yearsExperience: number;
+}
+
+// FAQ item
+export interface FAQItem {
+  question: string;
+  answer: string;
+}
+
+// Feature/Trust signal item
+export interface FeatureItem {
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+}
+
+// Toast notification
+export interface Toast {
+  id: string;
+  type: "success" | "error" | "info" | "warning";
+  message: string;
+  duration?: number;
+}
+
 
 export interface Registration {
   id: string;

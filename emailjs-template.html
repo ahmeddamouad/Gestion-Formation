@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nouvelle Inscription</title>
+</head>
+<body style="margin:0;padding:0;background-color:#f4f6f9;font-family:Arial,sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="padding:40px 0;">
+    <tr>
+      <td align="center">
+        <table width="600" cellpadding="0" cellspacing="0"
+          style="background:#ffffff;border-radius:8px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.08);">
+
+          <!-- Header -->
+          <tr>
+            <td style="background:#090E1A;padding:32px 40px;">
+              <h1 style="margin:0;color:#00C896;font-size:22px;font-weight:700;letter-spacing:0.5px;">
+                Nouvelle Inscription
+              </h1>
+              <p style="margin:6px 0 0;color:#8a9ab5;font-size:13px;">
+                Formulaire reçu depuis le site
+              </p>
+            </td>
+          </tr>
+
+          <!-- Divider -->
+          <tr>
+            <td style="height:4px;background:linear-gradient(90deg,#00C896,#0099FF);"></td>
+          </tr>
+
+          <!-- Body -->
+          <tr>
+            <td style="padding:32px 40px;">
+
+              <!-- Formation block -->
+              <table width="100%" cellpadding="0" cellspacing="0"
+                style="margin-bottom:28px;background:#f0faf6;border:1px solid #d0f0e4;border-radius:6px;">
+                <tr>
+                  <td style="padding:14px 18px;">
+                    <p style="margin:0;font-size:11px;color:#00a87a;text-transform:uppercase;font-weight:600;letter-spacing:0.8px;">
+                      Formation demandée
+                    </p>
+                    <p style="margin:6px 0 0;font-size:16px;font-weight:700;color:#090E1A;">
+                      {{formation_titre}}
+                    </p>
+                    <p style="margin:6px 0 0;font-size:13px;color:#555;">
+                      Mode : <strong>{{mode}}</strong>
+                    </p>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Candidate info table -->
+              <p style="margin:0 0 14px;font-size:13px;font-weight:700;color:#333;text-transform:uppercase;letter-spacing:0.6px;">
+                Informations du candidat
+              </p>
+              <table width="100%" cellpadding="0" cellspacing="0"
+                style="border-collapse:collapse;margin-bottom:28px;">
+
+                <tr style="border-bottom:1px solid #eef0f3;">
+                  <td style="padding:12px 0;width:140px;font-size:13px;font-weight:600;color:#666;">Prénom</td>
+                  <td style="padding:12px 0;font-size:14px;color:#111;">{{prenom}}</td>
+                </tr>
+                <tr style="border-bottom:1px solid #eef0f3;">
+                  <td style="padding:12px 0;font-size:13px;font-weight:600;color:#666;">Nom</td>
+                  <td style="padding:12px 0;font-size:14px;color:#111;">{{nom}}</td>
+                </tr>
+                <tr style="border-bottom:1px solid #eef0f3;">
+                  <td style="padding:12px 0;font-size:13px;font-weight:600;color:#666;">Email</td>
+                  <td style="padding:12px 0;font-size:14px;color:#111;">
+                    <a href="mailto:{{email}}" style="color:#0066cc;text-decoration:none;">{{email}}</a>
+                  </td>
+                </tr>
+                <tr style="border-bottom:1px solid #eef0f3;">
+                  <td style="padding:12px 0;font-size:13px;font-weight:600;color:#666;">Téléphone</td>
+                  <td style="padding:12px 0;font-size:14px;color:#111;">{{telephone}}</td>
+                </tr>
+                <tr>
+                  <td style="padding:12px 0;font-size:13px;font-weight:600;color:#666;">Entreprise</td>
+                  <td style="padding:12px 0;font-size:14px;color:#111;">{{entreprise}}</td>
+                </tr>
+
+              </table>
+
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="background:#f8f9fb;border-top:1px solid #eef0f3;padding:18px 40px;text-align:center;">
+              <p style="margin:0;font-size:11px;color:#aaa;">
+                Ce message a été envoyé automatiquement depuis le formulaire d'inscription.
+              </p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
