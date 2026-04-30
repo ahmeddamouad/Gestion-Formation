@@ -52,7 +52,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr" className={`${bricolage.variable} ${dmSans.variable}`}>
-      <head>
+      <body className="w-full min-h-screen bg-navy-900 text-text-primary font-body antialiased">
         {/* Meta Pixel Code */}
         <Script
           id="meta-pixel"
@@ -72,9 +72,6 @@ export default function RootLayout({
             `,
           }}
         />
-        {/* End Meta Pixel Code */}
-      </head>
-      <body className="w-full min-h-screen bg-navy-900 text-text-primary font-body antialiased">
         {/* Meta Pixel noscript fallback */}
         <noscript>
           <img
@@ -85,6 +82,7 @@ export default function RootLayout({
             alt=""
           />
         </noscript>
+        {/* End Meta Pixel Code */}
         {children}
       </body>
     </html>
